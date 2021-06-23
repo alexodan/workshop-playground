@@ -1,14 +1,17 @@
 import React from 'react'
 import CareerPath from "./components/CareerPath";
-import {TreeView} from "./components/TreeView";
+import {TreeItem, TreeView} from "./components/TreeView";
 
 function App() {
   return (
     <div>
       <TreeView>
-        <p>Lorem ipsum dolor sit amet</p>
-        <p>Consectetur adipisicing elit.</p>
-        <p>Atque blanditiis consequatur debitis</p>
+        <TreeItem nodeId="1" label="Applications">
+          <TreeItem nodeId="2" label="Calendar" />
+          <TreeItem nodeId="3" label="Chrome" />
+          <TreeItem nodeId="4" label="Webstorm" />
+        </TreeItem>
+        <TreeItem nodeId="5" label="Documents" />
       </TreeView>
       <CareerPath topics={[]} />
     </div>

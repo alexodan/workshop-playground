@@ -1,33 +1,51 @@
-import React, { ReactNode } from 'react'
+import React, {createContext, ReactNode, useContext} from 'react'
 import styled from 'styled-components';
+import CollapseIcon from '../../assets/collapse.svg';
+import ExpandIcon from '../../assets/expand.svg';
 
 type TreeItemProps = {
-    label: string;
-}
+  nodeId: string;
+  label: string;
+} & { children?: ReactNode };
 
 type TreeViewProps = {
-    className?: React.CSSProperties;
+  className?: React.CSSProperties;
+  collapseIcon?: string;
+  expandIcon?: string;
 } & { children?: ReactNode };
 
 const StyledTreeView = styled.div<{ classNameProp: React.CSSProperties }>`
-    ...className,
+  ...className,
 `
 
+const TreeContext = createContext({
+  isCollapsed: false,
+  collapseIcon: CollapseIcon,
+  expandIcon: ExpandIcon,
+});
+
 const TreeItem = ({ label }: TreeItemProps) => {
-    return (
-        <div>
-            <li>{ label }</li>
-        </div>
-    );
+  const { isCollapsed, expandIcon, collapseIcon } = useContext(TreeContext);
+  return (
+    <div>
+      <li>{label} { isCollapsed ? <img src={expandIcon} alt="expand" /> : <img src={collapseIcon} alt="collapse" /> }</li>
+    </div>
+  );
 }
 
 const TreeView = (props: TreeViewProps) => {
-    const { className, children } = props;
-    return (
+  const { className, collapseIcon, expandIcon, children } = props;
+  return (
+    <TreeContext.Provider value={{
+      isCollapsed: false,
+      collapseIcon: collapseIcon ?? CollapseIcon,
+      expandIcon: expandIcon ?? ExpandIcon,
+    }}>
       <StyledTreeView classNameProp={className ?? {}}>
-          { children }
+        { children }
       </StyledTreeView>
-    );
+    </TreeContext.Provider>
+  );
 }
 
 export { TreeItem, TreeView };
