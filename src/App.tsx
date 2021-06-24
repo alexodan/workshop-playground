@@ -1,6 +1,7 @@
 import React from 'react'
 import CareerPath from "./components/CareerPath";
 import {TreeItem, TreeView} from "./components/TreeView";
+import '../styles.css';
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
         </TreeItem>
         <TreeItem nodeId="5" label="Documents" />
       </TreeView>
-      <CareerPath topics={[]} />
+      {/*<CareerPath topics={[]} />*/}
     </div>
   )
 }
