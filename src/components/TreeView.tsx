@@ -1,7 +1,7 @@
-import React, {createContext, ReactNode, useContext} from 'react'
-import styled from 'styled-components';
-import CollapseIcon from '../../assets/collapse.svg';
-import ExpandIcon from '../../assets/expand.svg';
+import React, { createContext, ReactNode, useContext } from "react";
+import styled from "styled-components";
+import CollapseIcon from "../../assets/collapse.svg";
+import ExpandIcon from "../../assets/expand.svg";
 
 type TreeItemProps = {
   nodeId: string;
@@ -22,7 +22,7 @@ const StyledTreeView = styled.div`
   li {
     list-style: none;
   }
-`
+`;
 
 const TreeContext = createContext({
   isCollapsed: false,
@@ -35,35 +35,42 @@ const TreeItem = ({ nodeId, label, children }: TreeItemProps) => {
 
   const toggle = (nodeId: string) => {
     console.log(`Toggling node: ${nodeId}`);
-  }
+  };
 
   return (
     <div>
       <li key={nodeId}>
         {label}
-        { isCollapsed ?
+        {isCollapsed ? (
           <img src={expandIcon} alt="expand" onClick={() => toggle(nodeId)} />
-          : <img src={collapseIcon} alt="collapse" onClick={() => toggle(nodeId)} />
-        }
+        ) : (
+          <img
+            src={collapseIcon}
+            alt="collapse"
+            onClick={() => toggle(nodeId)}
+          />
+        )}
         {children ? <ul>{children}</ul> : null}
       </li>
     </div>
   );
-}
+};
 
 const TreeView = (props: TreeViewProps) => {
   const { className, collapseIcon, expandIcon, children } = props;
   return (
-    <TreeContext.Provider value={{
-      isCollapsed: false,
-      collapseIcon: collapseIcon ?? CollapseIcon,
-      expandIcon: expandIcon ?? ExpandIcon,
-    }}>
+    <TreeContext.Provider
+      value={{
+        isCollapsed: false,
+        collapseIcon: collapseIcon ?? CollapseIcon,
+        expandIcon: expandIcon ?? ExpandIcon,
+      }}
+    >
       <StyledTreeView id="tree-view" style={className}>
-        { children }
+        {children}
       </StyledTreeView>
     </TreeContext.Provider>
   );
-}
+};
 
 export { TreeItem, TreeView };

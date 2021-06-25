@@ -1,7 +1,7 @@
-import React from 'react'
+import React from "react";
 import CareerPath from "./components/CareerPath";
-import {TreeItem, TreeView} from "./components/TreeView";
-import '../styles.css';
+import { TreeItem, TreeView } from "./components/TreeView";
+import "../styles.css";
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
       </TreeView>
       {/*<CareerPath topics={[]} />*/}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

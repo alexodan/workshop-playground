@@ -1,21 +1,23 @@
-import React from 'react'
+import React from "react";
 
 type Topic = {
-    description: string;
-}
+  description: string;
+};
 
 type CareerPathProps = {
-    topics: Topic[];
-}
+  topics: Topic[];
+};
 
 const CareerPath = ({ topics }: CareerPathProps) => {
-    return (
-        <div>
-            <ul>
-                { topics.map((topic: Topic) => <li>{topic.description}</li>) }
-            </ul>
-        </div>
-    );
-}
+  return (
+    <div>
+      <ul>
+        {topics.map((topic: Topic) => (
+          <li>{topic.description}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
 export default CareerPath;
