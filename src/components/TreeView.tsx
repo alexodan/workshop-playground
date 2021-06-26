@@ -1,7 +1,7 @@
 import React, { createContext, ReactNode, useContext } from "react";
 import styled from "styled-components";
-import CollapseIcon from "../../assets/collapse.svg";
-import ExpandIcon from "../../assets/expand.svg";
+import { ReactComponent as CollapseIcon } from "../../assets/collapse.svg";
+import { ReactComponent as ExpandIcon } from "../../assets/expand.svg";
 
 type TreeItemProps = {
   nodeId: string;
@@ -10,8 +10,12 @@ type TreeItemProps = {
 
 type TreeViewProps = {
   className?: React.CSSProperties;
-  collapseIcon?: string;
-  expandIcon?: string;
+  collapseIcon?: React.FunctionComponent<
+    React.SVGProps<SVGSVGElement> & { title?: string }
+  >;
+  expandIcon?: React.FunctionComponent<
+    React.SVGProps<SVGSVGElement> & { title?: string }
+  >;
 } & { children?: ReactNode };
 
 const StyledTreeView = styled.div`
@@ -26,12 +30,12 @@ const StyledTreeView = styled.div`
 
 const TreeContext = createContext({
   isCollapsed: false,
-  collapseIcon: CollapseIcon,
-  expandIcon: ExpandIcon,
+  CollapseIcon,
+  ExpandIcon,
 });
 
 const TreeItem = ({ nodeId, label, children }: TreeItemProps) => {
-  const { isCollapsed, expandIcon, collapseIcon } = useContext(TreeContext);
+  const { isCollapsed, ExpandIcon, CollapseIcon } = useContext(TreeContext);
 
   const toggle = (nodeId: string) => {
     console.log(`Toggling node: ${nodeId}`);
@@ -42,13 +46,9 @@ const TreeItem = ({ nodeId, label, children }: TreeItemProps) => {
       <li key={nodeId}>
         {label}
         {isCollapsed ? (
-          <img src={expandIcon} alt="expand" onClick={() => toggle(nodeId)} />
+          <ExpandIcon fill="red" onClick={() => toggle(nodeId)} />
         ) : (
-          <img
-            src={collapseIcon}
-            alt="collapse"
-            onClick={() => toggle(nodeId)}
-          />
+          <CollapseIcon fill="red" onClick={() => toggle(nodeId)} />
         )}
         {children ? <ul>{children}</ul> : null}
       </li>
@@ -62,8 +62,8 @@ const TreeView = (props: TreeViewProps) => {
     <TreeContext.Provider
       value={{
         isCollapsed: false,
-        collapseIcon: collapseIcon ?? CollapseIcon,
-        expandIcon: expandIcon ?? ExpandIcon,
+        CollapseIcon: collapseIcon ?? CollapseIcon,
+        ExpandIcon: expandIcon ?? ExpandIcon,
       }}
     >
       <StyledTreeView id="tree-view" style={className}>
